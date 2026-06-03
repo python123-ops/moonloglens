@@ -1,0 +1,52 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "px830/mooncsv"
+
+// Values
+pub fn default_dialect() -> Dialect
+
+pub fn format_error(CsvError) -> String
+
+pub fn get_by_header(Document, Int, String) -> Result[String, CsvError]
+
+pub fn headers(Document) -> Array[String]
+
+pub fn parse(String) -> Result[Document, CsvError]
+
+pub fn parse_with(String, Dialect) -> Result[Document, CsvError]
+
+pub fn stringify(Document) -> String
+
+pub fn summarize(Document) -> String
+
+pub fn validate_rectangular(Document) -> Result[Unit, CsvError]
+
+// Errors
+
+// Types and methods
+pub(all) enum CsvError {
+  UnterminatedQuote(Position)
+  BareQuote(Position)
+  UnexpectedCharacter(Position, Char)
+  InconsistentColumns(Int, Int, Int)
+  MissingHeader(String)
+  RowOutOfRange(Int)
+} derive(Eq)
+
+pub(all) struct Dialect {
+  delimiter : Char
+  quote : Char
+} derive(Eq)
+
+pub(all) struct Document {
+  rows : Array[Array[String]]
+} derive(Eq)
+
+pub(all) struct Position {
+  line : Int
+  column : Int
+} derive(Eq)
+
+// Type aliases
+
+// Traits
+

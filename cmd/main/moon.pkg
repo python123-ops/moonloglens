@@ -1,0 +1,7 @@
+import {
+  "px830/mooncsv" @csv,
+}
+
+options(
+  "is-main": true,
+)

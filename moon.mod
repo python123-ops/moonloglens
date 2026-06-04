@@ -9,16 +9,16 @@
 //   "moonbitlang/x@0.4.6",
 // }
 
-name = "px830/mooncsv"
+name = "python123/moonloglens"
 
 version = "0.1.0"
 
-readme = "README.mbt.md"
+readme = "README.md"
 
 repository = ""
 
 license = "Apache-2.0"
 
-keywords = [ "csv", "parser", "table", "format", "contest" ]
+keywords = [ "logfmt", "logs", "query", "observability", "contest" ]
 
-description = "A tested MoonBit CSV parser, serializer, table helper library, and CLI demo for the MoonBit open-source ecosystem contest."
+description = "A lightweight MoonBit structured log parser, query engine, aggregation helper, and CLI demo for the MoonBit open-source ecosystem contest."

@@ -1,87 +1,103 @@
-# px830/mooncsv
+# python123/moonloglens
 
-MoonCSV 是一个面向 MoonBit 生态的 CSV/表格文本处理库，提供解析、生成、表头查询、矩形校验、错误诊断和命令行演示。
+MoonLogLens is a lightweight structured log parser, query engine, and
+aggregation helper for MoonBit.
 
-它是为 MoonBit 国产基础软件生态开源大赛准备的参赛项目。项目选题贴合官方推荐的“格式处理工具 / 可发布生态库 / 工程示例”方向，目标是做一个小而完整、可测试、可复现、可继续维护的基础库。
+The project targets a practical gap in the MoonBit ecosystem: developers often
+need to inspect log streams, filter incidents by fields, and summarize service
+behavior without a full observability stack. MoonLogLens focuses on a compact,
+dependency-free core that can be tested, published, and reused by other MoonBit
+projects.
 
-## 功能
+## Features
 
-- 解析普通 CSV、双引号字段、双引号转义、CRLF/LF 换行、尾随空字段。
-- 生成规范 CSV，字段包含逗号、引号或换行时自动引用并转义。
-- 返回带行列位置的解析错误。
-- 校验每行列数是否一致。
-- 按表头查询数据行单元格。
-- 提供 `moon run cmd/main` 可运行演示。
+- Parse logfmt-style entries such as
+  `ts=2026-06-04T10:00:00Z level=ERROR service=api msg="request timeout"`.
+- Support quoted values, escaped characters, spaces inside values, and
+  line/column diagnostics.
+- Parse multi-line log text into structured entries.
+- Filter entries with a small query language:
+  `level:ERROR service:api text:"timeout" has:trace_id`.
+- Aggregate entries by a field with `count_by(entries, "service")`.
+- Provide a deterministic CLI demo through `moon run cmd/main`.
 
-## 快速开始
+## Quick Start
 
 ```bash
 moon test
 moon run cmd/main
 ```
 
-示例输出：
+Example output:
 
 ```text
-MoonCSV demo
-rows=3, columns=3, headers=name|score|note
-first note=hello, MoonBit
-shape=rectangular
---- normalized csv ---
-name,score,note
-Ada,98,"hello, MoonBit"
-Bob,87,"line1
-line2"
+MoonLogLens demo
+entries=3
+query=level:ERROR service:api
+matches=1
+first_msg=request timeout
+--- count_by(service) ---
+api=2
+worker=1
 ```
 
-## API 示例
+## API Example
 
 ```mbt nocheck
 ///|
-test "read score" {
-  let doc = match @mooncsv.parse("name,score\nAda,98") {
-    Ok(doc) => doc
-    Err(err) => fail(@mooncsv.format_error(err))
+test "find api errors" {
+  let entries = match @moonloglens.parse_lines(
+    "level=INFO service=api msg=started\nlevel=ERROR service=api msg=\"request timeout\"",
+  ) {
+    Ok(entries) => entries
+    Err(err) => fail(@moonloglens.format_error(err))
   }
-  guard @mooncsv.get_by_header(doc, 0, "score") is Ok(score) else {
-    fail("expected score")
+  let query = match @moonloglens.parse_query("level:ERROR service:api") {
+    Ok(query) => query
+    Err(err) => fail(@moonloglens.format_error(err))
   }
-  assert_eq(score, "98")
+  let found = @moonloglens.filter(entries, query)
+  assert_eq(found.length(), 1)
 }
 ```
 
-公共 API：
+Public API:
 
-- `parse(input : String) -> Result[Document, CsvError]`
-- `parse_with(input : String, dialect : Dialect) -> Result[Document, CsvError]`
-- `stringify(doc : Document) -> String`
-- `headers(doc : Document) -> Array[String]`
-- `validate_rectangular(doc : Document) -> Result[Unit, CsvError]`
-- `get_by_header(doc : Document, row_index : Int, name : String) -> Result[String, CsvError]`
-- `summarize(doc : Document) -> String`
-- `format_error(err : CsvError) -> String`
+- `parse_line(input : String) -> Result[LogEntry, LogError]`
+- `parse_lines(input : String) -> Result[Array[LogEntry], LogError]`
+- `parse_query(input : String) -> Result[Query, LogError]`
+- `matches(entry : LogEntry, query : Query) -> Bool`
+- `filter(entries : Array[LogEntry], query : Query) -> Array[LogEntry]`
+- `count_by(entries : Array[LogEntry], key : String) -> Array[CountBucket]`
+- `get(entry : LogEntry, key : String) -> String?`
+- `message(entry : LogEntry) -> String`
+- `format_error(err : LogError) -> String`
 
-## 设计说明
+## Design
 
-核心解析器是一个小型状态机，逐字符维护：
+MoonLogLens intentionally keeps the first version small:
 
-- 当前字段 `StringBuilder`
-- 当前行 `Array[String]`
-- 全部行 `Array[Array[String]]`
-- `line` / `column` 诊断位置
-- 是否处于 quoted field
-- quoted field 刚结束后的合法后继字符
+- The parser scans each line once and builds `Array[LogField]` values.
+- The query parser supports field equality, text containment, and field
+  existence checks.
+- Query clauses are combined with AND semantics.
+- Aggregation preserves first-seen bucket order, which makes CLI output stable.
+- No file I/O, background services, external storage, or third-party MoonBit
+  packages are required.
 
-首版刻意不做文件 IO、流式解析、自动方言识别或类型推断。这样项目可以先把纯库 API、测试、文档和可运行示例做扎实，后续再扩展到 CLI 文件输入和大文件场景。
+This scope makes the package suitable as a contest entry and as a foundation
+for future work such as streaming ingestion, richer query syntax, and
+observability dashboards.
 
-## 参赛材料
+## Competition Materials
 
-- 项目设计：`docs/superpowers/specs/2026-06-03-mooncsv-design.md`
-- 实现计划：`docs/superpowers/plans/2026-06-03-mooncsv.md`
-- 一页申报书：`docs/competition/proposal.md`
-- 验收清单：`docs/competition/acceptance-checklist.md`
+- Project proposal: `docs/competition/proposal.md`
+- Acceptance checklist: `docs/competition/acceptance-checklist.md`
+- Submission guide: `docs/competition/submission-guide.md`
+- Design note: `docs/superpowers/specs/2026-06-04-moonloglens-design.md`
+- Implementation plan: `docs/superpowers/plans/2026-06-04-moonloglens.md`
 
-## 开发命令
+## Development
 
 ```bash
 moon info
@@ -89,8 +105,6 @@ moon fmt
 moon test
 moon run cmd/main
 ```
-
-CI 使用同样的命令做构建与测试验证。
 
 ## License
 

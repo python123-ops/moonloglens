@@ -1,21 +1,28 @@
 ///|
 fn main {
-  let sample = "name,score,note\nAda,98,\"hello, MoonBit\"\nBob,87,\"line1\nline2\""
-  match @csv.parse(sample) {
-    Ok(doc) => {
-      println("MoonCSV demo")
-      println(@csv.summarize(doc))
-      match @csv.get_by_header(doc, 0, "note") {
-        Ok(note) => println("first note=" + note)
-        Err(err) => println("lookup error: " + @csv.format_error(err))
+  let sample = "ts=2026-06-04T10:00:00Z level=INFO service=api msg=started\n" +
+    "ts=2026-06-04T10:00:03Z level=ERROR service=api msg=\"request timeout\" trace_id=abc123\n" +
+    "ts=2026-06-04T10:00:05Z level=ERROR service=worker msg=retry"
+  match @loglens.parse_lines(sample) {
+    Ok(entries) => {
+      println("MoonLogLens demo")
+      println("entries=\{entries.length()}")
+      match @loglens.parse_query("level:ERROR service:api") {
+        Ok(query) => {
+          let found = @loglens.filter(entries, query)
+          println("query=level:ERROR service:api")
+          println("matches=\{found.length()}")
+          if found.length() > 0 {
+            println("first_msg=" + @loglens.message(found[0]))
+          }
+        }
+        Err(err) => println("query error: " + @loglens.format_error(err))
       }
-      match @csv.validate_rectangular(doc) {
-        Ok(_) => println("shape=rectangular")
-        Err(err) => println("shape error: " + @csv.format_error(err))
+      println("--- count_by(service) ---")
+      for bucket in @loglens.count_by(entries, "service") {
+        println(bucket.value + "=" + bucket.count.to_string())
       }
-      println("--- normalized csv ---")
-      println(@csv.stringify(doc))
     }
-    Err(err) => println("parse error: " + @csv.format_error(err))
+    Err(err) => println("parse error: " + @loglens.format_error(err))
   }
 }

@@ -1,33 +1,40 @@
-# MoonCSV 验收清单
+# MoonLogLens 验收清单
 
-## 比赛基础要求
+## 仓库要求
 
-- [x] MoonBit 是主要实现语言。
-- [x] 仓库包含 Apache-2.0 开源许可证。
-- [x] README 说明项目目标、安装/运行、API 和示例。
-- [x] 提供可运行示例：`moon run cmd/main`。
-- [x] 提供自动化测试：`moon test`。
-- [x] 提供 CI 配置：`.github/workflows/ci.yml`。
-- [x] 提供一页项目申报书：`docs/competition/proposal.md`。
-- [ ] 发布公开仓库链接后，更新 `moon.mod` 的 `repository` 字段。
-- [ ] 发布 mooncakes.io 后，在 README 中补充安装方式。
+- [x] GitLink 仓库已创建。
+- [x] 仓库包含 10 次以上有效提交。
+- [x] 仓库包含 README、许可证、源码、测试和文档。
+- [x] 项目名称、简介和申报材料一致。
+- [x] README.md 使用普通文件模式，避免 symlink 克隆风险。
 
-## 功能验收
+## 功能要求
 
-- [x] 普通逗号分隔字段。
-- [x] 双引号字段。
-- [x] 双引号转义。
-- [x] 引号字段内换行。
-- [x] CRLF 与 LF 换行。
-- [x] 尾随空字段。
-- [x] CSV 生成与必要字段引用。
-- [x] 行列数一致性校验。
-- [x] 按表头查询单元格。
-- [x] 带行列位置的错误格式化。
+- [x] 支持 logfmt 风格日志解析。
+- [x] 支持引用值、空格和转义字符。
+- [x] 支持多行日志解析和错误行列定位。
+- [x] 支持字段等值查询。
+- [x] 支持全文包含查询。
+- [x] 支持字段存在性查询。
+- [x] 支持按字段计数聚合。
+- [x] 提供错误格式化。
 
-## 后续增强
+## 可运行性
 
-- [ ] CLI 支持读取文件路径。
-- [ ] 支持更多方言配置。
-- [ ] 增加 benchmark。
-- [ ] 增加 mooncakes.io 发布说明。
+- [x] `moon test` 通过。
+- [x] `moon run cmd/main` 可以运行演示。
+- [x] CI 使用 `moon info`、`moon fmt --check` 和 `moon test`。
+
+## 文档要求
+
+- [x] README 说明项目背景、功能、API 和运行方式。
+- [x] `docs/competition/proposal.md` 包含项目简介、场景、核心功能、原创性说明和技术路线。
+- [x] `docs/competition/submission-guide.md` 说明报名表第 5、6、7 项如何填写。
+- [x] `docs/competition/acceptance-checklist.md` 记录验收项。
+
+## 后续可扩展方向
+
+- [ ] CLI 支持读取真实日志文件。
+- [ ] 增加 OR、NOT 等查询组合。
+- [ ] 增加流式采集接口。
+- [ ] 发布到 mooncakes.io。

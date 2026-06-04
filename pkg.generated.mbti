@@ -1,49 +1,63 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "px830/mooncsv"
+package "python123/moonloglens"
 
 // Values
-pub fn default_dialect() -> Dialect
+pub fn count_by(Array[LogEntry], String) -> Array[CountBucket]
 
-pub fn format_error(CsvError) -> String
+pub fn filter(Array[LogEntry], Query) -> Array[LogEntry]
 
-pub fn get_by_header(Document, Int, String) -> Result[String, CsvError]
+pub fn format_error(LogError) -> String
 
-pub fn headers(Document) -> Array[String]
+pub fn get(LogEntry, String) -> String?
 
-pub fn parse(String) -> Result[Document, CsvError]
+pub fn matches(LogEntry, Query) -> Bool
 
-pub fn parse_with(String, Dialect) -> Result[Document, CsvError]
+pub fn message(LogEntry) -> String
 
-pub fn stringify(Document) -> String
+pub fn parse_line(String) -> Result[LogEntry, LogError]
 
-pub fn summarize(Document) -> String
+pub fn parse_lines(String) -> Result[Array[LogEntry], LogError]
 
-pub fn validate_rectangular(Document) -> Result[Unit, CsvError]
+pub fn parse_query(String) -> Result[Query, LogError]
 
 // Errors
 
 // Types and methods
-pub(all) enum CsvError {
+pub(all) struct CountBucket {
+  value : String
+  count : Int
+} derive(Eq)
+
+pub(all) struct LogEntry {
+  fields : Array[LogField]
+} derive(Eq)
+
+pub(all) enum LogError {
+  MissingKey(Position)
+  MissingEquals(Position, String)
+  MissingValue(Position, String)
   UnterminatedQuote(Position)
-  BareQuote(Position)
-  UnexpectedCharacter(Position, Char)
-  InconsistentColumns(Int, Int, Int)
-  MissingHeader(String)
-  RowOutOfRange(Int)
+  MissingQueryValue(Position, String)
 } derive(Eq)
 
-pub(all) struct Dialect {
-  delimiter : Char
-  quote : Char
-} derive(Eq)
-
-pub(all) struct Document {
-  rows : Array[Array[String]]
+pub(all) struct LogField {
+  key : String
+  value : String
 } derive(Eq)
 
 pub(all) struct Position {
   line : Int
   column : Int
+} derive(Eq)
+
+pub(all) struct Query {
+  clauses : Array[QueryClause]
+} derive(Eq)
+
+pub(all) enum QueryClause {
+  FieldEquals(String, String)
+  TextContains(String)
+  HasField(String)
 } derive(Eq)
 
 // Type aliases

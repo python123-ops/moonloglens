@@ -11,7 +11,7 @@ MoonLogLens 是一个面向 MoonBit 生态的轻量级结构化日志解析、�
 ## 仓库链接
 
 - GitLink 仓库：https://gitlink.org.cn/python123/moonloglens
-- GitHub 仓库：https://github.com/px830/moonloglens
+- GitHub 仓库：https://github.com/python123-ops/moonloglens
 
 ## 项目方向与适用场景
 

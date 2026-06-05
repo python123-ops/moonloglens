@@ -122,7 +122,7 @@ def build_pdf() -> None:
             [Paragraph("参赛方向", meta), Paragraph("MoonBit 国产基础软件开源生态项目", meta)],
             [Paragraph("开源许可证", meta), Paragraph("Apache-2.0", meta)],
             [Paragraph("GitLink 仓库", meta), Paragraph("https://gitlink.org.cn/python123/moonloglens", meta)],
-            [Paragraph("GitHub 仓库", meta), Paragraph("https://github.com/px830/moonloglens", meta)],
+            [Paragraph("GitHub 仓库", meta), Paragraph("https://github.com/python123-ops/moonloglens", meta)],
         ],
         colWidths=[3.2 * cm, 12 * cm],
     )
@@ -160,7 +160,7 @@ def build_docx() -> None:
         ("参赛方向", "MoonBit 国产基础软件开源生态项目"),
         ("开源许可证", "Apache-2.0"),
         ("GitLink 仓库", "https://gitlink.org.cn/python123/moonloglens"),
-        ("GitHub 仓库", "https://github.com/px830/moonloglens"),
+        ("GitHub 仓库", "https://github.com/python123-ops/moonloglens"),
     ]
     for row, (key, value) in zip(table.rows, rows):
         row.cells[0].text = key

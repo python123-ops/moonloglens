@@ -92,7 +92,7 @@ observability dashboards.
 ## Competition Materials
 
 - GitLink repository: `https://gitlink.org.cn/python123/moonloglens`
-- GitHub repository: `https://github.com/px830/moonloglens`
+- GitHub repository: `https://github.com/python123-ops/moonloglens`
 - Project proposal: `docs/competition/proposal.md`
 - Acceptance checklist: `docs/competition/acceptance-checklist.md`
 - Submission guide: `docs/competition/submission-guide.md`

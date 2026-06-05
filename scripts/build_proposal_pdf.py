@@ -49,7 +49,7 @@ SECTIONS = [
     ),
     (
         "六、预期成果",
-        "项目预期交付一个可运行的 MoonBit 结构化日志处理基础库，覆盖解析、查询、过滤和聚合场景的测试集，清晰的 README 与项目申报材料，以及可在 GitLink 上复现的完整开源仓库。后续可继续扩展真实日志文件读取、流式采集、倒排索引、更多查询组合和可视化分析能力。",
+        "项目预期交付一个可运行的 MoonBit 结构化日志处理基础库，覆盖解析、查询、过滤和聚合场景的测试集，清晰的 README 与项目申报材料，以及可在 GitLink 与 GitHub 上核验的完整开源仓库。后续可继续扩展真实日志文件读取、流式采集、倒排索引、更多查询组合和可视化分析能力。",
     ),
 ]
 
@@ -121,7 +121,8 @@ def build_pdf() -> None:
             [Paragraph("项目名称", meta), Paragraph(PROJECT_NAME, meta)],
             [Paragraph("参赛方向", meta), Paragraph("MoonBit 国产基础软件开源生态项目", meta)],
             [Paragraph("开源许可证", meta), Paragraph("Apache-2.0", meta)],
-            [Paragraph("仓库链接", meta), Paragraph("https://gitlink.org.cn/python123/moonloglens", meta)],
+            [Paragraph("GitLink 仓库", meta), Paragraph("https://gitlink.org.cn/python123/moonloglens", meta)],
+            [Paragraph("GitHub 仓库", meta), Paragraph("https://github.com/px830/moonloglens", meta)],
         ],
         colWidths=[3.2 * cm, 12 * cm],
     )
@@ -152,13 +153,14 @@ def build_docx() -> None:
     doc.styles["Normal"].font.size = Pt(10.5)
     title = doc.add_heading(TITLE, level=0)
     title.alignment = 1
-    table = doc.add_table(rows=4, cols=2)
+    table = doc.add_table(rows=5, cols=2)
     table.style = "Table Grid"
     rows = [
         ("项目名称", PROJECT_NAME),
         ("参赛方向", "MoonBit 国产基础软件开源生态项目"),
         ("开源许可证", "Apache-2.0"),
-        ("仓库链接", "https://gitlink.org.cn/python123/moonloglens"),
+        ("GitLink 仓库", "https://gitlink.org.cn/python123/moonloglens"),
+        ("GitHub 仓库", "https://github.com/px830/moonloglens"),
     ]
     for row, (key, value) in zip(table.rows, rows):
         row.cells[0].text = key

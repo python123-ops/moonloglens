@@ -3,6 +3,7 @@
 ## 仓库要求
 
 - [x] GitLink 仓库已创建。
+- [x] 申报材料包含 GitHub 仓库链接。
 - [x] 仓库包含 10 次以上有效提交。
 - [x] 仓库包含 README、许可证、源码、测试和文档。
 - [x] 项目名称、简介和申报材料一致。
@@ -29,7 +30,7 @@
 
 - [x] README 说明项目背景、功能、API 和运行方式。
 - [x] `docs/competition/proposal.md` 包含项目简介、场景、核心功能、原创性说明和技术路线。
-- [x] `docs/competition/submission-guide.md` 说明报名表第 5、6、7 项如何填写。
+- [x] `docs/competition/submission-guide.md` 说明报名表第 5、6、7 项如何填写，并补充 GitHub 链接要求。
 - [x] `docs/competition/acceptance-checklist.md` 记录验收项。
 
 ## 后续可扩展方向

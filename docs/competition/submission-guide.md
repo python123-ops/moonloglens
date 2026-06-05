@@ -2,10 +2,11 @@
 
 ## 第 5 项：GitLink 仓库链接
 
-填写：
+填写 GitLink 仓库链接，并在同一栏补充 GitHub 仓库链接，便于初审核验：
 
 ```text
-https://www.gitlink.org.cn/python123/moonloglens
+GitLink：https://gitlink.org.cn/python123/moonloglens
+GitHub：https://github.com/px830/moonloglens
 ```
 
 ## 第 6 项：项目名称

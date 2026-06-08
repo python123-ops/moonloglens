@@ -9,16 +9,22 @@
 //   "moonbitlang/x@0.4.6",
 // }
 
-name = "python123/moonloglens"
+name = "python123/moondepsolve"
 
 version = "0.1.0"
 
 readme = "README.md"
 
-repository = ""
+repository = "https://github.com/python123-ops/moonloglens"
 
 license = "Apache-2.0"
 
-keywords = [ "logfmt", "logs", "query", "observability", "contest" ]
+keywords = [
+  "semver",
+  "dependency-resolver",
+  "package-manager",
+  "solver",
+  "contest",
+]
 
-description = "A lightweight MoonBit structured log parser, query engine, aggregation helper, and CLI demo for the MoonBit open-source ecosystem contest."
+description = "A MoonBit semantic version, version range, and dependency resolution library for package ecosystem tooling."

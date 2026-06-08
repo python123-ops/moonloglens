@@ -1,112 +1,85 @@
-# python123/moonloglens
+# MoonDepSolve
 
-MoonLogLens is a lightweight structured log parser, query engine, and
-aggregation helper for MoonBit.
+MoonDepSolve is a small MoonBit library for semantic version parsing, version
+range matching, and deterministic dependency resolution. It is designed as a
+basic package-ecosystem component for MoonBit tooling, build planning, package
+auditing, and dependency conflict diagnosis.
 
-The project targets a practical gap in the MoonBit ecosystem: developers often
-need to inspect log streams, filter incidents by fields, and summarize service
-behavior without a full observability stack. MoonLogLens focuses on a compact,
-dependency-free core that can be tested, published, and reused by other MoonBit
-projects.
+Current public repositories:
+
+- GitLink: <https://gitlink.org.cn/python123/moonloglens>
+- GitHub: <https://github.com/python123-ops/moonloglens>
+
+The repository keeps its original submission history, while the project itself
+has been rebuilt as MoonDepSolve.
 
 ## Features
 
-- Parse logfmt-style entries such as
-  `ts=2026-06-04T10:00:00Z level=ERROR service=api msg="request timeout"`.
-- Support quoted values, escaped characters, spaces inside values, and
-  line/column diagnostics.
-- Parse multi-line log text into structured entries.
-- Filter entries with a small query language:
-  `level:ERROR service:api text:"timeout" has:trace_id`.
-- Aggregate entries by a field with `count_by(entries, "service")`.
-- Provide a deterministic CLI demo through `moon run cmd/main`.
+- Parse semantic versions such as `1.2.3` and `1.2.3-alpha.1`.
+- Compare stable and prerelease versions.
+- Parse version requirements:
+  - exact: `1.2.3`
+  - caret: `^1.2.0`
+  - tilde: `~1.2.0`
+  - comparator set: `>=1.0.0 <2.0.0`
+  - wildcard: `1.2.x`
+- Resolve transitive dependencies from an in-memory package registry.
+- Select the highest compatible version deterministically.
+- Report readable conflicts with dependency paths.
+- Format a stable lock-style result for demos and tests.
 
-## Quick Start
+## Public API
 
-```bash
-moon test
-moon run cmd/main
+```moonbit
+parse_version(input : String) -> Result[Version, DepError]
+parse_req(input : String) -> Result[VersionReq, DepError]
+matches(version : Version, req : VersionReq) -> Bool
+resolve(root : Array[Dependency], registry : Registry) -> Result[Resolution, DepError]
+format_error(err : DepError) -> String
+format_lock(resolution : Resolution) -> String
 ```
 
-Example output:
+## Example
 
-```text
-MoonLogLens demo
-entries=3
-query=level:ERROR service:api
-matches=1
-first_msg=request timeout
---- count_by(service) ---
-api=2
-worker=1
-```
+```moonbit
+let registry : @moondepsolve.Registry = {
+  packages: [
+    {
+      name: "core",
+      version: version("1.2.0"),
+      dependencies: [],
+    },
+    {
+      name: "http",
+      version: version("0.3.4"),
+      dependencies: [dependency("core", "^1.0.0")],
+    },
+  ],
+}
 
-## API Example
-
-```mbt nocheck
-///|
-test "find api errors" {
-  let entries = match @moonloglens.parse_lines(
-    "level=INFO service=api msg=started\nlevel=ERROR service=api msg=\"request timeout\"",
-  ) {
-    Ok(entries) => entries
-    Err(err) => fail(@moonloglens.format_error(err))
-  }
-  let query = match @moonloglens.parse_query("level:ERROR service:api") {
-    Ok(query) => query
-    Err(err) => fail(@moonloglens.format_error(err))
-  }
-  let found = @moonloglens.filter(entries, query)
-  assert_eq(found.length(), 1)
+match @moondepsolve.resolve([dependency("http", "~0.3.0")], registry) {
+  Ok(result) => println(@moondepsolve.format_lock(result))
+  Err(err) => println(@moondepsolve.format_error(err))
 }
 ```
 
-Public API:
-
-- `parse_line(input : String) -> Result[LogEntry, LogError]`
-- `parse_lines(input : String) -> Result[Array[LogEntry], LogError]`
-- `parse_query(input : String) -> Result[Query, LogError]`
-- `matches(entry : LogEntry, query : Query) -> Bool`
-- `filter(entries : Array[LogEntry], query : Query) -> Array[LogEntry]`
-- `count_by(entries : Array[LogEntry], key : String) -> Array[CountBucket]`
-- `get(entry : LogEntry, key : String) -> String?`
-- `message(entry : LogEntry) -> String`
-- `format_error(err : LogError) -> String`
-
-## Design
-
-MoonLogLens intentionally keeps the first version small:
-
-- The parser scans each line once and builds `Array[LogField]` values.
-- The query parser supports field equality, text containment, and field
-  existence checks.
-- Query clauses are combined with AND semantics.
-- Aggregation preserves first-seen bucket order, which makes CLI output stable.
-- No file I/O, background services, external storage, or third-party MoonBit
-  packages are required.
-
-This scope makes the package suitable as a contest entry and as a foundation
-for future work such as streaming ingestion, richer query syntax, and
-observability dashboards.
-
-## Competition Materials
-
-- GitLink repository: `https://gitlink.org.cn/python123/moonloglens`
-- GitHub repository: `https://github.com/python123-ops/moonloglens`
-- Project proposal: `docs/competition/proposal.md`
-- Acceptance checklist: `docs/competition/acceptance-checklist.md`
-- Submission guide: `docs/competition/submission-guide.md`
-- Design note: `docs/superpowers/specs/2026-06-04-moonloglens-design.md`
-- Implementation plan: `docs/superpowers/plans/2026-06-04-moonloglens.md`
-
-## Development
+## Demo
 
 ```bash
-moon info
-moon fmt
-moon test
 moon run cmd/main
 ```
+
+The demo builds a tiny package registry, resolves `appkit@1.0.0`, and prints a
+stable lock-style result.
+
+## Test
+
+```bash
+moon test
+```
+
+The test suite covers version parsing, prerelease comparison, range matching,
+transitive resolution, conflict diagnosis, and lock output.
 
 ## License
 

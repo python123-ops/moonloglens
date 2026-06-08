@@ -1,41 +1,28 @@
-# MoonLogLens 验收清单
+# MoonDepSolve 验收清单
 
-## 仓库要求
+## 功能验收
 
-- [x] GitLink 仓库已创建。
-- [x] 申报材料包含 GitHub 仓库链接。
-- [x] 仓库包含 10 次以上有效提交。
-- [x] 仓库包含 README、许可证、源码、测试和文档。
-- [x] 项目名称、简介和申报材料一致。
-- [x] README.md 使用普通文件模式，避免 symlink 克隆风险。
+- [ ] `parse_version` 能解析稳定版本和 prerelease 版本。
+- [ ] `compare_version` 能正确比较 major、minor、patch 和 prerelease。
+- [ ] `parse_req` 能解析 exact、caret、tilde、comparator set、wildcard。
+- [ ] `matches` 能判断版本是否满足约束。
+- [ ] `resolve` 能完成根依赖和传递依赖求解。
+- [ ] `resolve` 默认选择最高兼容版本。
+- [ ] 冲突场景能返回包含依赖路径的错误说明。
+- [ ] `format_lock` 输出稳定，便于测试和后续锁文件扩展。
+- [ ] `moon run cmd/main` 能展示可运行示例。
 
-## 功能要求
+## 工程验收
 
-- [x] 支持 logfmt 风格日志解析。
-- [x] 支持引用值、空格和转义字符。
-- [x] 支持多行日志解析和错误行列定位。
-- [x] 支持字段等值查询。
-- [x] 支持全文包含查询。
-- [x] 支持字段存在性查询。
-- [x] 支持按字段计数聚合。
-- [x] 提供错误格式化。
+- [ ] `moon info && moon fmt` 执行成功。
+- [ ] `moon test` 全部通过。
+- [ ] `README.md` 是普通文件，非 symlink。
+- [ ] 申报书 PDF 内包含有效 GitLink 和 GitHub 仓库链接。
+- [ ] 仓库保留原有提交历史，满足比赛提交次数要求。
 
-## 可运行性
+## 初审风险检查
 
-- [x] `moon test` 通过。
-- [x] `moon run cmd/main` 可以运行演示。
-- [x] CI 使用 `moon info`、`moon fmt --check` 和 `moon test`。
-
-## 文档要求
-
-- [x] README 说明项目背景、功能、API 和运行方式。
-- [x] `docs/competition/proposal.md` 包含项目简介、场景、核心功能、原创性说明和技术路线。
-- [x] `docs/competition/submission-guide.md` 说明报名表第 5、6、7 项如何填写，并补充 GitHub 链接要求。
-- [x] `docs/competition/acceptance-checklist.md` 记录验收项。
-
-## 后续可扩展方向
-
-- [ ] CLI 支持读取真实日志文件。
-- [ ] 增加 OR、NOT 等查询组合。
-- [ ] 增加流式采集接口。
-- [ ] 发布到 mooncakes.io。
+- [ ] 项目方向已从窄范围文本处理改为成熟基础软件方向。
+- [ ] 项目名称、README、申报书和 CLI 均使用 MoonDepSolve。
+- [ ] 仓库内容不再保留旧项目正文叙述。
+- [ ] 若后续能创建新仓库，应优先迁移到 `moondepsolve` 仓库 URL。

@@ -1,26 +1,32 @@
-# GitLink 报名表第 5、6、7 项填写说明
+# 报名表第 5、6、7 项填写建议
 
 ## 第 5 项：GitLink 仓库链接
 
-填写 GitLink 仓库链接，并在同一栏补充 GitHub 仓库链接，便于初审核验：
+填写：
 
 ```text
-GitLink：https://gitlink.org.cn/python123/moonloglens
-GitHub：https://github.com/python123-ops/moonloglens
+https://gitlink.org.cn/python123/moonloglens
 ```
+
+说明：这是当前可访问、可克隆、保留完整提交历史的 GitLink 仓库。仓库内容已重制为 MoonDepSolve。
 
 ## 第 6 项：项目名称
 
+填写：
+
 ```text
-MoonLogLens：MoonBit 轻量级结构化日志解析与查询引擎
+MoonDepSolve：MoonBit 包生态语义版本与依赖求解工具
 ```
 
 ## 第 7 项：项目申报书
 
-上传 PDF 文件：
+上传以下 PDF 文件：
 
 ```text
-docs/competition/MoonLogLens项目申报书.pdf
+docs/competition/MoonDepSolve项目申报书.pdf
 ```
 
-同目录下的 `MoonLogLens项目申报书.docx` 是可编辑源文件，后续如需修改 PDF 内容，可以先改 DOCX 或更新生成脚本再导出。
+申报书内已包含有效 GitLink 和 GitHub 仓库链接：
+
+- GitLink：<https://gitlink.org.cn/python123/moonloglens>
+- GitHub：<https://github.com/python123-ops/moonloglens>

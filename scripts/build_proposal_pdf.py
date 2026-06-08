@@ -9,47 +9,47 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import (
-    Paragraph,
-    SimpleDocTemplate,
-    Spacer,
-    Table,
-    TableStyle,
-)
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "docs" / "competition"
-PDF_PATH = OUT_DIR / "MoonLogLens项目申报书.pdf"
-DOCX_PATH = OUT_DIR / "MoonLogLens项目申报书.docx"
+PDF_PATH = OUT_DIR / "MoonDepSolve项目申报书.pdf"
+DOCX_PATH = OUT_DIR / "MoonDepSolve项目申报书.docx"
 
-TITLE = "MoonLogLens 项目申报书"
-PROJECT_NAME = "MoonLogLens：MoonBit 轻量级结构化日志解析与查询引擎"
+TITLE = "MoonDepSolve 项目申报书"
+PROJECT_NAME = "MoonDepSolve：MoonBit 包生态语义版本与依赖求解工具"
+GITLINK_URL = "https://gitlink.org.cn/python123/moonloglens"
+GITHUB_URL = "https://github.com/python123-ops/moonloglens"
 
 SECTIONS = [
     (
         "一、项目简介",
-        "MoonLogLens 是一个面向 MoonBit 生态的轻量级结构化日志解析、查询与聚合基础库。项目支持 logfmt 风格日志解析、带位置的错误诊断、字段过滤、全文关键字匹配、字段存在性查询和按字段计数聚合，可作为日志采集与查询系统、自动化构建日志分析、服务运行状态排查等场景的基础组件。",
+        "MoonDepSolve 是一个面向 MoonBit 包生态的基础软件组件，提供语义版本解析、版本约束匹配、依赖图求解、冲突诊断和锁文件格式化能力。项目采用纯 MoonBit 实现，不依赖外部服务，可作为包管理器、构建系统、依赖审计工具和自动化发布流程中的底层模块。",
     ),
     (
         "二、项目方向与适用场景",
-        "日志是基础软件系统中最常见的可观测数据来源之一。MoonLogLens 先提供一个小而完整的 MoonBit 日志处理内核，使开发者能够在 MoonBit 程序中快速解析结构化日志、筛选故障事件、统计服务分布，并为后续日志采集、查询系统和可观测性工具奠定基础。适用场景包括服务运行日志快速筛选、自动化构建日志分析、边缘设备日志摘要统计，以及后续日志采集和索引系统建设。",
+        "依赖求解是包管理和构建系统中的成熟基础领域。随着 MoonBit 包生态增长，工具链需要能够判断版本兼容性、选择可用版本组合、解释依赖冲突，并形成稳定的解析结果。MoonDepSolve 可服务于依赖安装、构建规划、兼容性检查、依赖升级建议和教学示例等场景。",
     ),
     (
         "三、计划实现的核心功能",
-        "1. 解析 level=ERROR service=api msg=\"request timeout\" 等 logfmt 风格日志；2. 支持引用值、空格、转义字符和多行文本解析；3. 在错误中返回行列位置，便于定位格式问题；4. 支持 level:ERROR service:api text:\"timeout\" has:trace_id 等查询表达式；5. 提供字段读取、消息读取、过滤匹配和按字段计数聚合 API；6. 提供命令行演示、测试、README、设计文档和 CI 配置。",
+        "项目首版实现语义版本解析、prerelease 排序、exact/caret/tilde/comparator/wildcard 五类约束解析、版本匹配、传递依赖求解、最高兼容版本选择、冲突路径诊断和 lock-style 文本输出。命令行示例会展示一个内置包索引的求解过程，测试覆盖成功解析和失败诊断场景。",
     ),
     (
         "四、原创性说明",
-        "本项目为原创项目，不是移植已有开源项目。项目围绕 MoonBit 生态中的结构化日志解析与查询需求重新设计数据结构、扫描器、查询语法、错误诊断、测试和 CLI 示例。首版不引入外部依赖，不依赖数据库或平台服务，聚焦可复用、可测试、可发布的基础库能力。项目采用 Apache-2.0 开源许可证。",
+        "本项目为原创 MoonBit 实现，不是移植已有开源项目。项目围绕 MoonBit 包生态中常见的版本约束和依赖图问题重新设计数据结构、解析器、求解流程和错误诊断。首版刻意保持内核小而完整，不引入外部依赖，不绑定具体平台接口，保证可测试、可阅读、可扩展。",
     ),
     (
         "五、技术路线",
-        "核心解析器采用确定性单遍扫描，逐字符维护当前位置、当前键、当前值、是否处于引用值，以及引用值中的转义状态。查询器复用轻量扫描思路，将查询文本转换为字段等值、全文包含和字段存在三类条件。聚合器使用数组保存首次出现顺序，保证测试和 CLI 输出稳定。项目结构包括根包核心库、cmd/main 命令行示例、黑盒测试、竞赛材料和 CI 配置。",
+        "项目采用“解析层、约束层、求解层、展示层”的结构。解析层负责版本和约束字符串；约束层将范围统一表示为 comparator 数组；求解层从根依赖开始遍历包索引，选择最高兼容版本并展开传递依赖；诊断层在包缺失、无匹配版本或已选版本冲突时输出可读错误；展示层通过 CLI 和 lock-style 文本展示结果。",
     ),
     (
         "六、预期成果",
-        "项目预期交付一个可运行的 MoonBit 结构化日志处理基础库，覆盖解析、查询、过滤和聚合场景的测试集，清晰的 README 与项目申报材料，以及可在 GitLink 与 GitHub 上核验的完整开源仓库。后续可继续扩展真实日志文件读取、流式采集、倒排索引、更多查询组合和可视化分析能力。",
+        "项目预期交付一个可运行、可测试的 MoonBit 依赖求解核心库，一组覆盖版本解析、约束匹配、传递依赖和冲突诊断的测试，一个可通过 moon run cmd/main 执行的 CLI 示例，以及 README、设计文档、验收清单和本申报书。仓库将同步到 GitLink 与 GitHub，便于评审克隆和复现。",
+    ),
+    (
+        "七、后续扩展方向",
+        "后续可扩展真实包索引读取、结构化锁文件读写、最小变更升级建议、依赖图输出、冲突图解释、构建计划生成和与 MoonBit 包发布流程集成。相比单一文本处理工具，依赖求解方向具备更强的基础软件属性和长期扩展空间。",
     ),
 ]
 
@@ -62,8 +62,8 @@ def register_font() -> str:
     ]
     for font in candidates:
         if font.exists():
-            pdfmetrics.registerFont(TTFont("MoonLogLensCN", str(font)))
-            return "MoonLogLensCN"
+            pdfmetrics.registerFont(TTFont("MoonDepSolveCN", str(font)))
+            return "MoonDepSolveCN"
     return "Helvetica"
 
 
@@ -121,8 +121,8 @@ def build_pdf() -> None:
             [Paragraph("项目名称", meta), Paragraph(PROJECT_NAME, meta)],
             [Paragraph("参赛方向", meta), Paragraph("MoonBit 国产基础软件开源生态项目", meta)],
             [Paragraph("开源许可证", meta), Paragraph("Apache-2.0", meta)],
-            [Paragraph("GitLink 仓库", meta), Paragraph("https://gitlink.org.cn/python123/moonloglens", meta)],
-            [Paragraph("GitHub 仓库", meta), Paragraph("https://github.com/python123-ops/moonloglens", meta)],
+            [Paragraph("GitLink 仓库", meta), Paragraph(GITLINK_URL, meta)],
+            [Paragraph("GitHub 仓库", meta), Paragraph(GITHUB_URL, meta)],
         ],
         colWidths=[3.2 * cm, 12 * cm],
     )
@@ -142,8 +142,8 @@ def build_pdf() -> None:
     )
     story.extend([table, Spacer(1, 0.4 * cm)])
     for section_title, text in SECTIONS:
-      story.append(Paragraph(section_title, heading))
-      story.append(Paragraph(text, body))
+        story.append(Paragraph(section_title, heading))
+        story.append(Paragraph(text, body))
     doc.build(story)
 
 
@@ -159,8 +159,8 @@ def build_docx() -> None:
         ("项目名称", PROJECT_NAME),
         ("参赛方向", "MoonBit 国产基础软件开源生态项目"),
         ("开源许可证", "Apache-2.0"),
-        ("GitLink 仓库", "https://gitlink.org.cn/python123/moonloglens"),
-        ("GitHub 仓库", "https://github.com/python123-ops/moonloglens"),
+        ("GitLink 仓库", GITLINK_URL),
+        ("GitHub 仓库", GITHUB_URL),
     ]
     for row, (key, value) in zip(table.rows, rows):
         row.cells[0].text = key

@@ -1,63 +1,76 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "python123/moonloglens"
+package "python123/moondepsolve"
 
 // Values
-pub fn count_by(Array[LogEntry], String) -> Array[CountBucket]
+pub fn compare_version(Version, Version) -> Int
 
-pub fn filter(Array[LogEntry], Query) -> Array[LogEntry]
+pub fn format_error(DepError) -> String
 
-pub fn format_error(LogError) -> String
+pub fn format_lock(Resolution) -> String
 
-pub fn get(LogEntry, String) -> String?
+pub fn format_version(Version) -> String
 
-pub fn matches(LogEntry, Query) -> Bool
+pub fn matches(Version, VersionReq) -> Bool
 
-pub fn message(LogEntry) -> String
+pub fn parse_req(String) -> Result[VersionReq, DepError]
 
-pub fn parse_line(String) -> Result[LogEntry, LogError]
+pub fn parse_version(String) -> Result[Version, DepError]
 
-pub fn parse_lines(String) -> Result[Array[LogEntry], LogError]
-
-pub fn parse_query(String) -> Result[Query, LogError]
+pub fn resolve(Array[Dependency], Registry) -> Result[Resolution, DepError]
 
 // Errors
 
 // Types and methods
-pub(all) struct CountBucket {
-  value : String
-  count : Int
+pub(all) struct Comparator {
+  op : CompareOp
+  version : Version
 } derive(Eq)
 
-pub(all) struct LogEntry {
-  fields : Array[LogField]
+pub(all) enum CompareOp {
+  Eq
+  Gt
+  Gte
+  Lt
+  Lte
 } derive(Eq)
 
-pub(all) enum LogError {
-  MissingKey(Position)
-  MissingEquals(Position, String)
-  MissingValue(Position, String)
-  UnterminatedQuote(Position)
-  MissingQueryValue(Position, String)
+pub(all) enum DepError {
+  InvalidVersion(String, String)
+  InvalidReq(String, String)
+  PackageNotFound(String)
+  NoMatchingVersion(String, String)
+  VersionConflict(String, String, String, String)
 } derive(Eq)
 
-pub(all) struct LogField {
-  key : String
-  value : String
+pub(all) struct Dependency {
+  name : String
+  req : VersionReq
 } derive(Eq)
 
-pub(all) struct Position {
-  line : Int
-  column : Int
+pub(all) struct PackageVersion {
+  name : String
+  version : Version
+  dependencies : Array[Dependency]
 } derive(Eq)
 
-pub(all) struct Query {
-  clauses : Array[QueryClause]
+pub(all) struct Registry {
+  packages : Array[PackageVersion]
 } derive(Eq)
 
-pub(all) enum QueryClause {
-  FieldEquals(String, String)
-  TextContains(String)
-  HasField(String)
+pub(all) struct Resolution {
+  packages : Array[PackageVersion]
+} derive(Eq)
+
+pub(all) struct Version {
+  major : Int
+  minor : Int
+  patch : Int
+  prerelease : String?
+} derive(Eq)
+
+pub(all) struct VersionReq {
+  raw : String
+  comparators : Array[Comparator]
 } derive(Eq)
 
 // Type aliases

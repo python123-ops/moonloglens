@@ -5,7 +5,7 @@
 填写：
 
 ```text
-https://gitlink.org.cn/python123/moonloglens
+https://gitlink.org.cn/python123/moondepsolve
 ```
 
 说明：这是当前可访问、可克隆、保留完整提交历史的 GitLink 仓库。仓库内容已重制为 MoonDepSolve。
@@ -28,5 +28,5 @@ docs/competition/MoonDepSolve项目申报书.pdf
 
 申报书内已包含有效 GitLink 和 GitHub 仓库链接：
 
-- GitLink：<https://gitlink.org.cn/python123/moonloglens>
-- GitHub：<https://github.com/python123-ops/moonloglens>
+- GitLink：<https://gitlink.org.cn/python123/moondepsolve>
+- GitHub：<https://github.com/python123-ops/moondepsolve>

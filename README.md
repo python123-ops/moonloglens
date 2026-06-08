@@ -7,8 +7,8 @@ auditing, and dependency conflict diagnosis.
 
 Current public repositories:
 
-- GitLink: <https://gitlink.org.cn/python123/moonloglens>
-- GitHub: <https://github.com/python123-ops/moonloglens>
+- GitLink: <https://gitlink.org.cn/python123/moondepsolve>
+- GitHub: <https://github.com/python123-ops/moondepsolve>
 
 The repository keeps its original submission history, while the project itself
 has been rebuilt as MoonDepSolve.
@@ -26,7 +26,7 @@ has been rebuilt as MoonDepSolve.
 - Resolve transitive dependencies from an in-memory package registry.
 - Select the highest compatible version deterministically.
 - Report readable conflicts with dependency paths.
-- Format a stable lock-style result for demos and tests.
+- Format a stable dependency lock result for demos and tests.
 
 ## Public API
 
@@ -70,7 +70,7 @@ moon run cmd/main
 ```
 
 The demo builds a tiny package registry, resolves `appkit@1.0.0`, and prints a
-stable lock-style result.
+stable dependency lock result.
 
 ## Test
 

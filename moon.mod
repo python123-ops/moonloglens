@@ -15,7 +15,7 @@ version = "0.1.0"
 
 readme = "README.md"
 
-repository = "https://github.com/python123-ops/moonloglens"
+repository = "https://github.com/python123-ops/moondepsolve"
 
 license = "Apache-2.0"
 

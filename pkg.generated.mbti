@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "python123/moondepsolve"
+package "wyc060514/moondepsolve"
 
 // Values
 pub fn compare_version(Version, Version) -> Int

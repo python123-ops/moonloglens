@@ -21,6 +21,7 @@ TITLE = "MoonDepSolve 项目申报书"
 PROJECT_NAME = "MoonDepSolve：MoonBit 包生态语义版本与依赖求解工具"
 GITLINK_URL = "https://gitlink.org.cn/python123/moondepsolve"
 GITHUB_URL = "https://github.com/python123-ops/moondepsolve"
+CORE_AUTHOR = "wyc060514"
 
 SECTIONS = [
     (
@@ -121,6 +122,7 @@ def build_pdf() -> None:
             [Paragraph("项目名称", meta), Paragraph(PROJECT_NAME, meta)],
             [Paragraph("参赛方向", meta), Paragraph("MoonBit 国产基础软件开源生态项目", meta)],
             [Paragraph("开源许可证", meta), Paragraph("Apache-2.0", meta)],
+            [Paragraph("核心作者", meta), Paragraph(CORE_AUTHOR, meta)],
             [Paragraph("GitLink 仓库", meta), Paragraph(GITLINK_URL, meta)],
             [Paragraph("GitHub 仓库", meta), Paragraph(GITHUB_URL, meta)],
         ],
@@ -153,12 +155,13 @@ def build_docx() -> None:
     doc.styles["Normal"].font.size = Pt(10.5)
     title = doc.add_heading(TITLE, level=0)
     title.alignment = 1
-    table = doc.add_table(rows=5, cols=2)
+    table = doc.add_table(rows=6, cols=2)
     table.style = "Table Grid"
     rows = [
         ("项目名称", PROJECT_NAME),
         ("参赛方向", "MoonBit 国产基础软件开源生态项目"),
         ("开源许可证", "Apache-2.0"),
+        ("核心作者", CORE_AUTHOR),
         ("GitLink 仓库", GITLINK_URL),
         ("GitHub 仓库", GITHUB_URL),
     ]

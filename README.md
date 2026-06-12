@@ -5,6 +5,8 @@ range matching, and deterministic dependency resolution. It is designed as a
 basic package-ecosystem component for MoonBit tooling, build planning, package
 auditing, and dependency conflict diagnosis.
 
+Core author: `wyc060514`
+
 Current public repositories:
 
 - GitLink: <https://gitlink.org.cn/python123/moondepsolve>

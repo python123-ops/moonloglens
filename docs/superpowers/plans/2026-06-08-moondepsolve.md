@@ -8,7 +8,7 @@ and prepare competition materials with effective GitLink and GitHub links.
 
 ## Key Tasks
 
-- Rename package metadata to `wyc060514/moondepsolve`.
+- Rename package metadata to `python123/moondepsolve`.
 - Replace the previous core library with semantic version, range, and resolver APIs.
 - Add tests for version parsing, range matching, resolution, conflicts, and lock output.
 - Rewrite the CLI demo around dependency resolution.

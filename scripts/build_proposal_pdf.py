@@ -21,7 +21,7 @@ TITLE = "MoonDepSolve 项目申报书"
 PROJECT_NAME = "MoonDepSolve：MoonBit 包生态语义版本与依赖求解工具"
 GITLINK_URL = "https://gitlink.org.cn/python123/moondepsolve"
 GITHUB_URL = "https://github.com/python123-ops/moondepsolve"
-CORE_AUTHOR = "wyc060514"
+CORE_AUTHOR = "python123"
 
 SECTIONS = [
     (

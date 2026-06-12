@@ -9,7 +9,7 @@
 //   "moonbitlang/x@0.4.6",
 // }
 
-name = "wyc060514/moondepsolve"
+name = "python123/moondepsolve"
 
 version = "0.1.0"
 

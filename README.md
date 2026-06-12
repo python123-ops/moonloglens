@@ -5,7 +5,7 @@ range matching, and deterministic dependency resolution. It is designed as a
 basic package-ecosystem component for MoonBit tooling, build planning, package
 auditing, and dependency conflict diagnosis.
 
-Core author: `wyc060514`
+Core author: `python123`
 
 Current public repositories:
 
